@@ -26,6 +26,13 @@ pipeline {
         checkout scm
       }
     }
+stage('Shell Diagnostic') {
+  steps {
+    sh 'echo Hello from container'
+    sh 'whoami'
+    sh 'ls -la'
+  }
+}
 
     stage('Build and Test') {
       steps {
