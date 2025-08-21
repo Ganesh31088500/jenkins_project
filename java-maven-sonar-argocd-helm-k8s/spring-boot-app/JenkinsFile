@@ -30,7 +30,7 @@ pipeline {
 
 
 
-    stage('Build and Test') {
+    stage('Build ') {
   steps {
     sh '''
       mkdir -p $HOME/.m2
