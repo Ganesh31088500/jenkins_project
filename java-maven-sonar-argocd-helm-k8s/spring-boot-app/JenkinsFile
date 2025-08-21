@@ -28,15 +28,7 @@ pipeline {
       }
     }
 
-    stage('Shell Diagnostic') {
-      steps {
-        sh '''
-          echo "== Shell Diagnostic =="
-          whoami
-          ls -la
-        '''
-      }
-    }
+
 
     stage('Build and Test') {
       steps {
