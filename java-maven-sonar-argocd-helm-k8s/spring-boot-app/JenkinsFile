@@ -30,16 +30,20 @@ pipeline {
 
 
 
-    stage('Build ') {
+ stage('Build') {
   steps {
-    sh '''
-      mkdir -p $HOME/.m2
-      ls -ltr
-      cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
-      mvn clean package -DskipTests
-    '''
+    dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
+      sh '''
+        mkdir -p /var/lib/jenkins/.m2
+        echo "Listing files:"
+        ls -ltr
+        echo "Running Maven build..."
+        mvn clean package -DskipTests
+      '''
+    }
   }
 }
+
 
     stage('Static Code Analysis') {
       steps {
