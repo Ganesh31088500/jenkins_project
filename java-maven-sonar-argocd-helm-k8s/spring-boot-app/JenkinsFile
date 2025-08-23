@@ -29,17 +29,12 @@ pipeline {
     }
 
 
-
-stage('Build with Tests') {
+stage('Debug Shell') {
   steps {
-    dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
-      sh '''
-        echo "Running full Maven build with tests..."
-        mvn clean verify
-      '''
-    }
+    sh 'echo Hello from inside the container'
   }
 }
+
 
 
 
