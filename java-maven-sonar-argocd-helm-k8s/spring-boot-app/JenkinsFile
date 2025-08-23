@@ -11,7 +11,7 @@ pipeline {
     SONAR_URL = "http://52.66.196.155:9000"
     GIT_REPO_NAME = "jenkins_project"
     GIT_USER_NAME = "Ganesh31088500"
-    DOCKER_IMAGE = "ultimate-cicd:${BUILD_NUMBER}"
+    DOCKER_IMAGE = "ganeshpitchuka3108/ultimate-cicd:${BUILD_NUMBER}"
     PATH = "/usr/share/maven/bin:/usr/bin:/bin" // Optional: ensures mvn is available
   }
 
