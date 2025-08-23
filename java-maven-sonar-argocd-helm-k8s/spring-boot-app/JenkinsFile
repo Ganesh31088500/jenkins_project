@@ -16,10 +16,15 @@ pipeline {
   }
 
   stages {
-    stage('Clean Workspace') {
+    stage('Debug agent') {
       steps {
-        sh 'chown -R jenkins:jenkins . || true'
-        cleanWs()
+       sh '''
+            echo "Inside the custom jenkins docker agent"
+whoami
+mvn -v
+docker --version
+git --version
+'''
       }
     }
 
@@ -29,14 +34,10 @@ pipeline {
       }
     }
 
-stage('Prepare the EnV'){
-steps{
-sh 'apk add --no-cache bash'
-}
-}
-stage('Debug Shell') {
+
+stage(' Build ') {
   steps {
-    sh 'echo Hello from inside the container'
+    sh ''' cd java-maven-sonar-argocd-helm-k8s/spring-boot-app mvn clean install '''
   }
 }
 
