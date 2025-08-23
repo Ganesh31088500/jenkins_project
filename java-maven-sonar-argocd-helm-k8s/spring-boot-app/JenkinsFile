@@ -2,8 +2,7 @@ pipeline {
   agent {
     docker {
       image 'abhishekf5/maven-abhishek-docker-agent:v1'
- args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-      
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
 
@@ -12,42 +11,42 @@ pipeline {
     GIT_REPO_NAME = "jenkins_project"
     GIT_USER_NAME = "Ganesh31088500"
     DOCKER_IMAGE = "ganeshpitchuka3108/ultimate-cicd:${BUILD_NUMBER}"
-    PATH = "/usr/share/maven/bin:/usr/bin:/bin" // Optional: ensures mvn is available
+    PATH = "/usr/share/maven/bin:/usr/bin:/bin" // ensures mvn is available
+  }
+
+  options {
+    skipDefaultCheckout() // Prevents automatic checkout to give us control
   }
 
   stages {
-stage('Clean Workspace') {
-  steps {
-    cleanWs()
-  }
-}
+
+    stage('Clean Workspace and Checkout') {
+      steps {
+        cleanWs() // ✅ Wipe the workspace before fetching any code
+        checkout scm // ✅ Now fetch code freshly from repo
+      }
+    }
 
     stage('Debug agent') {
       steps {
-       sh '''
-            echo "Inside the custom jenkins docker agent"
-whoami
-mvn -v
-docker --version
-git --version
-'''
+        sh '''
+          echo "Inside the custom jenkins docker agent"
+          whoami
+          mvn -v
+          docker --version
+          git --version
+        '''
       }
     }
 
-
-    stage('Checkout') {
+    stage('Build') {
       steps {
-        checkout scm
+        sh '''
+          cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+          mvn clean install
+        '''
       }
     }
-
-
-stage(' Build ') {
-  steps {
-    sh ''' cd java-maven-sonar-argocd-helm-k8s/spring-boot-app mvn clean install '''
-  }
-}
-
 
     stage('Static Code Analysis') {
       steps {
@@ -59,8 +58,6 @@ stage(' Build ') {
         }
       }
     }
-
-
 
     stage('Build and Push Docker Image') {
       steps {
