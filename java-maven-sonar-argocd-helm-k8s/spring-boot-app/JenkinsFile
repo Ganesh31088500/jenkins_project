@@ -29,11 +29,6 @@ git --version
 '''
       }
     }
-stage('Cleanup') {
-  steps {
-    cleanWs()
-  }
-}
 
 
     stage('Checkout') {
