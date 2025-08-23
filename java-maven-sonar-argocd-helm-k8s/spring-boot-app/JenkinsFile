@@ -6,7 +6,9 @@ pipeline {
       
     }
   }
-
+  options {
+    cleanWs() // ✅ This line wipes the workspace before every build
+  }
   environment {
     SONAR_URL = "http://52.66.196.155:9000"
     GIT_REPO_NAME = "jenkins_project"
